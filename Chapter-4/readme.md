@@ -91,14 +91,257 @@ jest.mock('./greet', () => ({
   sayGoodBye: (name: string) => `Good bye, ${name}.`,
 }));
 
+// 테스트 통과 ✅
 test('인사말을 반환한다(원래 구현대로)', () => {
-  // 테스트 통과 ✅
   expect(greet('Taro')).toBe('Hello! Taro.');
 });
 
+// 테스트 통과 ✅
 test('작별 인사를 반환한다(원래 구현과 다르게)', () => {
-  // 테스트 통과 ✅
   const message = `${sayGoodBye('Taro')} See you.`;
   expect(message).toBe('Good bye, Taro. See you.');
+});
+```
+
+## 4. 스텁 실전
+
+테스트할 함수
+
+```typescript
+export type Profile = {
+  id: string;
+  name?: string;
+  age?: number;
+  email: string;
+};
+
+export function getMyProfile(): Promise<Profile> {
+  // 웹 API 요청
+  return fetch('https://myapi.testing.com/my/profile').then(async (res) => {
+    const data = await res.json();
+    if (!res.ok) {
+      throw data;
+    }
+    return data;
+  });
+}
+
+// getMyProfile 로 취득한 데이터는 가공된 뒤 렌더링된다.
+
+export async function getGreet() {
+  const data = await getMyProfile();
+  if (!data.name) {
+    // 1. name이 없으면 하드코딩된 인사말을 반환한다.
+    return `Hello, anonymous user!`;
+  }
+  // 2. name이 있으면 name을 포함한 인사말을 반환한다.
+  return `Hello, ${data.name}!`;
+}
+```
+
+테스트 코드
+
+```typescript
+describe('getGreet', () => {
+  // 테스트 통과 ✅
+  test('데이터 취득 성공 시 : 사용자 이름이 없는 경우', async () => {
+    // getMyProfile이 resolve됐을 때의 값을 재현
+    jest.spyOn(Fetchers, 'getMyProfile').mockResolvedValueOnce({
+      // mockResolvedValueOnce는 함수의 프로미스 반환값을 정해줄 수 있다. 일종의 스텁 개념이다.
+      id: 'xxxxxxx-123456',
+      email: 'taroyamada@myapi.testing.com',
+    });
+    await expect(getGreet()).resolves.toBe('Hello, anonymous user!'); //
+  });
+
+  // 테스트 통과 ✅
+  test('데이터 취득 성공 시: 사용자 이름이 있는 경우', async () => {
+    jest.spyOn(Fetchers, 'getMyProfile').mockResolvedValueOnce({
+      id: 'xxxxxxx-123456',
+      email: 'taroysamada@myapi.testing.com',
+      name: 'taroyamada',
+    });
+    await expect(getGreet()).resolves.toBe('Hello, taroyamada!');
+  });
+
+  // 테스트 통과 ✅
+  test('데이터 취득 실패 시', async () => {
+    // getMyProfile이 reject됐을 때의 값을 재현
+    jest.spyOn(Fetchers, 'getMyProfile').mockRejectedValueOnce(httpError); // reject값도 스텁으로 만들 수 있다.
+    await expect(getGreet()).rejects.toMatchObject({
+      err: { message: 'internal server error' },
+    });
+  });
+
+  // 테스트 통과 ✅
+  test('데이터 취득 실패 시 에러가 발생한 데이터와 함께 예외가 throw된다', async () => {
+    expect.assertions(1); // try-catch문을 사용했으니 이것을 잊지말자!
+    jest.spyOn(Fetchers, 'getMyProfile').mockRejectedValueOnce(httpError);
+    try {
+      await getGreet();
+    } catch (err) {
+      expect(err).toMatchObject(httpError);
+    }
+  });
+});
+```
+
+## 5. 웹 API 목 객체 생성 함수가
+
+테스트할 함수
+
+```typescript
+export async function getMyArticleLinksByCategory(category: string) {
+  // 데이터 취득 함수(Web API 클라이언트)
+  const data = await getMyArticles();
+  // 취득한 데이터 중 지정한 태그를 포함한 기사만 골라낸다.
+  const articles = data.articles.filter((article) =>
+    article.tags.includes(category)
+  );
+  if (!articles.length) {
+    // 해당되는 기사가 없으면 null을 반환한다.
+    return null;
+  }
+  // 해당되는 기사가 있으면 목록용으로 가공해서 데이터를 반환한다.
+  return articles.map((article) => ({
+    title: article.title,
+    link: `/articles/${article.id}`,
+  }));
+}
+
+export type Article = {
+  id: string;
+  createdAt: string;
+  tags: string[];
+  title: string;
+  body: string;
+};
+
+export type Articles = {
+  articles: Article[];
+};
+```
+
+`getMyArticleLinksByCategory`의 테스트 케이스
+
+- 지정한 태그를 가진 기사가 한 건도 없으면 `null`을 반환
+- 지정한 태그를 가진 기사가 한 건 이상 있으면 링크 목록을 반환
+- 데이터 취득에 실패하면 예외 발생
+
+```typescript
+function mockGetMyArticles(status = 200) {
+  if (status > 299) {
+    return jest
+      .spyOn(Fetchers, 'getMyArticles')
+      .mockRejectedValueOnce(httpError);
+  }
+  return jest
+    .spyOn(Fetchers, 'getMyArticles')
+    .mockResolvedValueOnce(getMyArticlesData);
+}
+
+// 테스트 통과 ✅
+test('지정한 태그를 포함한 기사가 한 건도 없으면 null을 반환한다', async () => {
+  mockGetMyArticles();
+  const data = await getMyArticleLinksByCategory('playwright');
+  expect(data).toBeNull();
+});
+
+// 테스트 통과 ✅
+test('지정한 태그를 포함한 기사가 한 건 이상 있으면 링크 목록을 반환한다', async () => {
+  mockGetMyArticles();
+  const data = await getMyArticleLinksByCategory('testing');
+  expect(data).toMatchObject([
+    {
+      link: '/articles/howto-testing-with-typescript',
+      title: '타입스크립트를 사용한 테스트 작성법',
+    },
+    {
+      link: '/articles/react-component-testing-with-jest',
+      title: '제스트로 시작하는 리액트 컴포넌트 테스트',
+    },
+  ]);
+});
+
+// 테스트 통과 ✅
+test('데이터 취득에 실패하면 reject된다', async () => {
+  mockGetMyArticles(500);
+  await getMyArticleLinksByCategory('testing').catch((err) => {
+    expect(err).toMatchObject({
+      err: { message: 'internal server error' },
+    });
+  });
+});
+```
+
+## 6 목 함수를 사용하는 스파이
+
+- 실행되었는지 검증하기
+
+```typescript
+// 테스트 통과 ✅
+test('목 함수가 실행됐다', () => {
+  const mockFn = jest.fn();
+  mockFn();
+  expect(mockFn).toBeCalled();
+});
+
+// 테스트 통과 ✅
+test('목 함수가 실행되지 않았다', () => {
+  const mockFn = jest.fn();
+  expect(mockFn).not.toBeCalled();
+});
+```
+
+- 실행 횟수 검증
+
+```typescript
+// 테스트 통과 ✅
+test('목 함수는 실행 횟수를 기록한다', () => {
+  const mockFn = jest.fn();
+  mockFn();
+  expect(mockFn).toHaveBeenCalledTimes(1);
+  mockFn();
+  expect(mockFn).toHaveBeenCalledTimes(2);
+});
+```
+
+- 실행 시 인수 검증
+
+```typescript
+// 테스트 통과 ✅
+const mockFn = jest.fn();
+function greet(message: string) {
+  mockFn(message); // 인수를 받아 실행된다.
+}
+greet('hello'); // "hello"를 인수로 실행된 것이 mockFn에 기록된다.
+expect(mockFn).toHaveBeenCalledWith('hello');
+```
+
+- 인수가 객체일 때의 검증
+
+`toHaveBeenCalledWith`을 이용하면 된다.
+객체 전체가 아닌 일부 프로퍼티만 검증하고 싶다면 `objectContaining`를 이용한다.
+
+```typescript
+// 테스트 통과 ✅
+test('목 함수는 실행 시 인수가 객체일 때에도 검증할 수 있다', () => {
+  const mockFn = jest.fn();
+  checkConfig(mockFn);
+  expect(mockFn).toHaveBeenCalledWith({
+    mock: true,
+    feature: { spy: true },
+  });
+});
+
+// 테스트 통과 ✅
+test('expect.objectContaining를 사용한 부분 검증', () => {
+  const mockFn = jest.fn();
+  checkConfig(mockFn);
+  expect(mockFn).toHaveBeenCalledWith(
+    expect.objectContaining({
+      feature: { spy: true },
+    })
+  );
 });
 ```
