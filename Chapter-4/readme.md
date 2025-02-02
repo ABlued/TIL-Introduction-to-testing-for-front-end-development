@@ -345,3 +345,161 @@ test('expect.objectContaining를 사용한 부분 검증', () => {
   );
 });
 ```
+
+## 7. 웹 API 목 객체의 세부 사항
+
+입력값을 검증한 후 응답 데이터로 교체하는 목 객체를 구현해본다.
+
+테스트할 함수
+
+```typescript
+export function checkLength(value: string) {
+  if (value.length === 0) {
+    throw new ValidationError('한 글자 이상의 문자를 입력해주세요');
+  }
+}
+```
+
+목 함수
+
+```typescript
+function mockPostMyArticle(input: ArticleInput, status = 200) {
+  if (status > 299) {
+    return jest
+      .spyOn(Fetchers, 'postMyArticle')
+      .mockRejectedValueOnce(httpError);
+  }
+  try {
+    checkLength(input.title);
+    checkLength(input.body);
+    return jest
+      .spyOn(Fetchers, 'postMyArticle')
+      .mockResolvedValue({ ...postMyArticleData, ...input });
+  } catch (err) {
+    return jest
+      .spyOn(Fetchers, 'postMyArticle')
+      .mockRejectedValueOnce(httpError);
+  }
+}
+
+function inputFactory(input?: Partial<ArticleInput>) {
+  return {
+    tags: ['testing'],
+    title: '타입스크립트를 사용한 테스트 작성법',
+    body: '테스트 작성 시 타입스크립트를 사용하면 테스트의 유지 보수가 쉬워진다',
+    ...input,
+  };
+}
+```
+
+테스트 코드
+
+- 유효성 검사 성공 재현 케이스
+
+```typescript
+// 테스트 통과 ✅
+test('유효성 검사에 성공하면 성공 응답을 반환한다', async () => {
+  // 유효성 검사에 통과하는 입력을 준비한다.
+  const input = inputFactory();
+  // 입력값을 포함한 성공 응답을 반환하는 목 객체를 만든다.
+  const mock = mockPostMyArticle(input);
+  // input을 인수로 테스트할 함수를 실행한다.
+  const data = await postMyArticle(input);
+  // 취득한 데이터에 입력 내용이 포함됐는지 검증한다.
+  expect(data).toMatchObject(expect.objectContaining(input));
+  // 목 함수가 호출됐는지 검증한다.
+  expect(mock).toHaveBeenCalled();
+});
+```
+
+- 유효성 검사 실패 재현 케이스
+
+```typescript
+// 테스트 통과 ✅
+test('유효성 검사에 실패하면 reject된다', async () => {
+  expect.assertions(2);
+  // 유효성 검사에 통과하지 못하는 입력을 준비한다.
+  const input = inputFactory({ title: '', body: '' });
+  // 입력값을 포함한 성공 응답을 반환하는 목 객체를 만든다.
+  const mock = mockPostMyArticle(input);
+  // 유효성 검사에 통과하지 못하고 reject됐는지 검증한다.
+  await postMyArticle(input).catch((err) => {
+    // 에러 객체가 reject됐는지 검증한다.
+    expect(err).toMatchObject({ err: { message: expect.anything() } });
+    // 목 함수가 호출됐는지 검증한다.
+    expect(mock).toHaveBeenCalled();
+  });
+});
+```
+
+- 데이터 취득 실패 재현 테스트
+  데이터 취득 실패때에도 목 객체 생성 함수가 호출되었는지 검증한다.
+
+```typescript
+test('데이터 취득에 실패하면 reject된다', async () => {
+  expect.assertions(2);
+  // 유효성 검사에 통과하는 입력값을 준비한다.
+  const input = inputFactory();
+  // 실패 응답을 반환하는 목 객체를 만든다.
+  const mock = mockPostMyArticle(input, 500);
+  // reject됐는지 검증한다.
+  await postMyArticle(input).catch((err) => {
+    // 에러 객체가 reject됐는지 검증한다.
+    expect(err).toMatchObject({ err: { message: expect.anything() } });
+    // 목 함수가 호출됐는지 검증한다.
+    expect(mock).toHaveBeenCalled();
+  });
+});
+```
+
+## 8. 현재 시각에 의존하는 테스트
+
+테스트가 현재 시각에 의존하게 된다면 해당 테스트는 특정 시간대에는 테스트가 실패하는 불안정이 생기길 마련이다.
+이때 테스트 실행 환경의 현재 시각을 고정하면 불안정을 해결할 수 있다.
+
+테스트할 함수
+
+```typescript
+export function greetByTime() {
+  const hour = new Date().getHours();
+  if (hour < 12) {
+    return '좋은 아침입니다';
+  } else if (hour < 18) {
+    return '식사는 하셨나요';
+  }
+  return '좋은 밤 되세요';
+}
+```
+
+#### 현재 시각 고정하기
+
+- `jest.useFakeTimers`: 제스트에 가짜 타이머를 사용하도록 지시하는 함수
+- `jest.setSystemTime`: 가짜 타이머에서 사용할 현재 시각을 설정하는 함수
+- `jest.useRealTimers`: 제스트에 실제 타이머를 사용하도록 지시하는 원상 복귀 함수
+
+```typescript
+describe('greetByTime(', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  test("아침에는 '좋은 아침입니다'를 반환한다", () => {
+    jest.setSystemTime(new Date(2023, 4, 23, 8, 0, 0));
+    expect(greetByTime()).toBe('좋은 아침입니다');
+  });
+
+  test("점심에는 '식사는 하셨나요'를 반환한다", () => {
+    jest.setSystemTime(new Date(2023, 4, 23, 14, 0, 0));
+    expect(greetByTime()).toBe('식사는 하셨나요');
+  });
+
+  test("저녁에는 '좋은 밤 되세요'를 반환한다", () => {
+    jest.setSystemTime(new Date(2023, 4, 23, 21, 0, 0));
+    expect(greetByTime()).toBe('좋은 밤 되세요');
+  });
+});
+```
