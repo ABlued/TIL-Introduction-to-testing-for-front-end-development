@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot: 신규 계정 등록 폼이 표시된다 1`] = `
+<div>
+  <form
+    aria-labelledby=":r4:"
+  >
+    <h2
+      id=":r4:"
+    >
+      신규 계정 등록
+    </h2>
+    <fieldset>
+      <legend>
+        계정정보 입력
+      </legend>
+      <div>
+        <label>
+          메일주소
+          <input
+            placeholder="example@test.com"
+            type="text"
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          비밀번호
+          <input
+            placeholder="8자 이상"
+            type="password"
+          />
+        </label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>
+        이용 약관 동의
+      </legend>
+      <label>
+        <input
+          type="checkbox"
+        />
+        서비스 
+        <a
+          href="/terms"
+        >
+          이용 약관
+        </a>
+        을 확인했으며 이에 동의합니다
+      </label>
+    </fieldset>
+    <div>
+      <button
+        disabled=""
+      >
+        회원가입
+      </button>
+    </div>
+  </form>
+</div>
+`;

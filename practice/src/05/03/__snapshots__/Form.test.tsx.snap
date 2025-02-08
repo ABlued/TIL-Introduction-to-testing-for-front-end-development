@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot: 계정명인 'taro'가 표시된다 1`] = `
+<div>
+  <form>
+    <h2>
+      계정 정보
+    </h2>
+    <p>
+      taro
+    </p>
+    <div>
+      <button>
+        수정
+      </button>
+    </div>
+  </form>
+</div>
+`;
