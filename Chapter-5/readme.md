@@ -37,7 +37,9 @@ UI 컴포넌트의 최소 단위는 버튼과 같은 개별 UI다. 작은 UI 컴
 
 <br/>
 
-### UI 테스팅 코드 예시 - Form UI 컴포넌트 테스트
+## 3. UI 테스트
+
+### Form UI 컴포넌트 테스트
 
 테스트할 Form 컴포넌트
 
@@ -97,7 +99,7 @@ test('버튼을 클릭하면 이벤트 핸들러가 실행된다', () => {
 
 <br/>
 
-### UI 테스팅 코드 예시 - Item List UI 컴포넌트 테스트
+### Item List UI 컴포넌트 테스트
 
 테스트할 코드
 
@@ -232,7 +234,9 @@ test('링크에 id로 만든 URL을 표시한다', () => {
 
 <br/>
 
-### 인터랙티브 UI 테스팅 코드 예시 - 이용 약관 동의 UI 컴포넌트 테스트
+## 4. 인터랙티브 UI 테스트
+
+### 이용 약관 동의 UI 컴포넌트 테스트
 
 테스트할 코드
 
@@ -272,7 +276,7 @@ test('체크 박스가 체크되어 있지 않습니다', () => {
 });
 ```
 
-### 인터랙티브 UI 테스팅 코드 예시 - 계정 정보 입력 UI 컴포넌트 테스트
+### 계정 정보 입력 UI 컴포넌트 테스트
 
 테스트할 코드
 
@@ -347,7 +351,7 @@ test('비밀번호 입력란', async () => {
 });
 ```
 
-### 인터랙티브 UI 테스팅 코드 예시 - 신규 회원가입 폼 UI 컴포넌트 테스트
+### 신규 회원가입 폼 UI 컴포넌트 테스트
 
 테스트할 코드
 
@@ -405,5 +409,352 @@ test('이용 약관에 동의하는 체크 박스를 클릭하면 회원가입 �
   render(<Form />);
   await user.click(screen.getByRole('checkbox'));
   expect(screen.getByRole('button', { name: '회원가입' })).toBeEnabled();
+});
+```
+
+</br>
+
+## 5. 유틸리티 함수를 활용한 테스트
+
+### 배송지 정보 입력 UI 컴포넌트 테스트
+
+#### 분기점
+
+- 이전 배송지가 없음
+- 이전 배송지가 있음: 새로운 배송지를 등록하지 않는다.
+- 이전 배송지가 있음: 새로운 배송지를 등록한다.
+
+테스트할 코드
+
+```typescript
+export type AddressOption = React.ComponentProps<'option'> & { id: string };
+export type Props = {
+  deliveryAddresses?: AddressOption[];
+  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
+};
+export const Form = (props: Props) => {
+  const [registerNew, setRegisterNew] = useState<boolean | undefined>(
+    undefined
+  );
+  return (
+    <form onSubmit={props.onSubmit}>
+      <h2>배송지 정보 입력</h2>
+      <ContactNumber />
+      {props.deliveryAddresses?.length ? (
+        <>
+          <RegisterDeliveryAddress onChange={setRegisterNew} />
+          {registerNew ? (
+            <DeliveryAddress title='새로운 배송지' />
+          ) : (
+            <PastDeliveryAddress
+              disabled={registerNew === undefined}
+              options={props.deliveryAddresses}
+            />
+          )}
+        </>
+      ) : (
+        <DeliveryAddress />
+      )}
+      <hr />
+      <div>
+        <button>주문내용 확인</button>
+      </div>
+    </form>
+  );
+};
+```
+
+#### 폼 입력을 함수화하기
+
+```typescript
+// 전화번호와 이름을 입력하는 함수
+async function inputContactNumber(
+  inputValues = {
+    name: '배언수',
+    phoneNumber: '000-0000-0000',
+  }
+) {
+  await user.type(
+    screen.getByRole('textbox', { name: '전화번호' }),
+    inputValues.phoneNumber
+  );
+  await user.type(
+    screen.getByRole('textbox', { name: '이름' }),
+    inputValues.name
+  );
+  return inputValues;
+}
+
+// 배송지를 입력하는 함수
+async function inputDeliveryAddress(
+  inputValues = {
+    postalCode: '16397',
+    prefectures: '경기도',
+    municipalities: '수원시 권선구',
+    streetNumber: '매곡로 67',
+  }
+) {
+  await user.type(
+    screen.getByRole('textbox', { name: '우편번호' }),
+    inputValues.postalCode
+  );
+  await user.type(
+    screen.getByRole('textbox', { name: '시/도' }),
+    inputValues.prefectures
+  );
+  await user.type(
+    screen.getByRole('textbox', { name: '시/군/구' }),
+    inputValues.municipalities
+  );
+  await user.type(
+    screen.getByRole('textbox', { name: '도로명' }),
+    inputValues.streetNumber
+  );
+  return inputValues;
+}
+// 목 생성 함수
+async function clickSubmit() {
+  await user.click(screen.getByRole('button', { name: '주문내용 확인' }));
+}
+
+function mockHandleSubmit() {
+  const mockFn = jest.fn();
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data: { [k: string]: unknown } = {};
+    formData.forEach((value, key) => (data[key] = value));
+    mockFn(data);
+  };
+  return [mockFn, onSubmit] as const;
+}
+```
+
+#### 이전 배송지가 없는 경우의 테스트
+
+```typescript
+describe('이전 배송지가 없는 경우', () => {
+  // 테스트 통과 ✅
+  test('배송지 입력란이 존재한다', () => {
+    render(<Form />);
+    expect(screen.getByRole('group', { name: '연락처' })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: '배송지' })).toBeInTheDocument();
+  });
+
+  // 테스트 통과 ✅
+  test('폼을 제출하면 입력 내용을 전달받는다', async () => {
+    const [mockFn, onSubmit] = mockHandleSubmit();
+    render(<Form onSubmit={onSubmit} />);
+    const contactNumber = await inputContactNumber();
+    const deliveryAddress = await inputDeliveryAddress();
+    await clickSubmit();
+    expect(mockFn).toHaveBeenCalledWith(
+      expect.objectContaining({ ...contactNumber, ...deliveryAddress })
+    );
+  });
+});
+```
+
+#### 이전 배송지가 있는 경우의 테스트
+
+```typescript
+describe('이전 배송지가 있는 경우', () => {
+  // 테스트 통과 ✅
+  test('질문에 대답할 때까지 배송지를 선택할 수 없다', () => {
+    render(<Form deliveryAddresses={deliveryAddresses} />);
+    expect(
+      screen.getByRole('group', { name: '새로운 배송지를 등록하시겠습니까?' })
+    ).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: '이전 배송지' })).toBeDisabled();
+  });
+
+  // 테스트 통과 ✅
+  test("'아니오'를 선택하고 제출하면 입력 내용을 전달받는다", async () => {
+    const [mockFn, onSubmit] = mockHandleSubmit();
+    render(<Form deliveryAddresses={deliveryAddresses} onSubmit={onSubmit} />);
+    await user.click(screen.getByLabelText('아니오'));
+    expect(
+      screen.getByRole('group', { name: '이전 배송지' })
+    ).toBeInTheDocument();
+    const inputValues = await inputContactNumber();
+    await clickSubmit();
+    expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(inputValues));
+  });
+
+  // 테스트 통과 ✅
+  test("'네'를 선택하고 제출하면 입력 내용을 전달받는다", async () => {
+    const [mockFn, onSubmit] = mockHandleSubmit();
+    render(<Form deliveryAddresses={deliveryAddresses} onSubmit={onSubmit} />);
+    await user.click(screen.getByLabelText('네'));
+    expect(
+      screen.getByRole('group', { name: '새로운 배송지' })
+    ).toBeInTheDocument();
+    const contactNumber = await inputContactNumber();
+    const deliveryAddress = await inputDeliveryAddress();
+    await clickSubmit();
+    expect(mockFn).toHaveBeenCalledWith(
+      expect.objectContaining({ ...contactNumber, ...deliveryAddress })
+    );
+  });
+
+```
+
+## 6. 비동기 처리가 포함된 UI 컴포넌트 테스트
+
+### 계정 정보 UI 컴포넌트 테스트
+
+테스트할 코드
+
+```typescript
+export const RegisterAddress = () => {
+  const [postResult, setPostResult] = useState('');
+  return (
+    <div>
+      <Form
+        onSubmit={handleSubmit((values) => {
+          try {
+            checkPhoneNumber(values.phoneNumber);
+            postMyAddress(values)
+              .then(() => {
+                setPostResult('등록됐습니다');
+              })
+              .catch(() => {
+                setPostResult('등록에 실패했습니다');
+              });
+          } catch (err) {
+            if (err instanceof ValidationError) {
+              setPostResult('올바르지 않은 값이 포함되어 있습니다');
+              return;
+            }
+            setPostResult('알 수 없는 에러가 발생했습니다');
+          }
+        })}
+      />
+      {postResult && <p>{postResult}</p>}
+    </div>
+  );
+};
+```
+
+```typescript
+const headers = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+};
+
+export function postMyAddress(values: unknown): Promise<Result> {
+  return fetch(host('/my/address'), {
+    method: 'POST',
+    body: JSON.stringify(values),
+    headers,
+  }).then(handleResponse);
+}
+
+// 목 함수
+export function mockPostMyAddress(status = 200) {
+  if (status > 299) {
+    return jest
+      .spyOn(Fetchers, 'postMyAddress')
+      .mockRejectedValueOnce(httpError);
+  }
+  return jest
+    .spyOn(Fetchers, 'postMyAddress')
+    .mockResolvedValueOnce(postMyAddressMock);
+}
+
+// 입력된 값을 전송하는 인터랙션 함수
+async function fillValuesAndSubmit() {
+  const contactNumber = await inputContactNumber();
+  const deliveryAddress = await inputDeliveryAddress();
+  const submitValues = { ...contactNumber, ...deliveryAddress };
+  await clickSubmit();
+  return submitValues;
+}
+```
+
+<br/>
+
+테스트 코드
+
+```typescript
+// 테스트 통과 ✅
+test("성공하면 '등록됐습니다'가 표시된다", async () => {
+  const mockFn = mockPostMyAddress();
+  render(<RegisterAddress />);
+  const submitValues = await fillValuesAndSubmit();
+  expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(submitValues));
+  expect(screen.getByText('등록됐습니다')).toBeInTheDocument();
+});
+
+// 테스트 통과 ✅
+test("실패하면 '등록에 실패했습니다'가 표시된다", async () => {
+  const mockFn = mockPostMyAddress(500);
+  render(<RegisterAddress />);
+  const submitValues = await fillValuesAndSubmit();
+  expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(submitValues));
+  expect(screen.getByText('등록에 실패했습니다')).toBeInTheDocument();
+});
+```
+
+<br/>
+
+### 유효성 검사 오류 테스트
+
+테스트할 코드
+
+```typescript
+export class ValidationError extends Error {}
+
+export function checkPhoneNumber(value: any) {
+  if (!value.match(/^[0-9\-]+$/)) {
+    throw new ValidationError();
+  }
+}
+
+<Form
+  onSubmit={handleSubmit((values) => {
+    try {
+      checkPhoneNumber(values.phoneNumber);
+      // 데이터 취득 함수
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        setPostResult('올바르지 않은 값이 포함되어 있습니다');
+        return;
+      }
+    }
+  })}
+/>;
+```
+
+테스트 코드
+
+```typescript
+async function fillInvalidValuesAndSubmit() {
+  const contactNumber = await inputContactNumber({
+    name: '배언수',
+    phoneNumber: 'abc-defg-hijkl', // 올바르지 안ㅇㅎ은 값
+  });
+  const deliveryAddress = await inputDeliveryAddress();
+  const submitValues = { ...contactNumber, ...deliveryAddress };
+  await clickSubmit();
+  return submitValues;
+}
+
+// 테스트 통과 ✅
+test('유효성 검사 에러가 발생하면 메시지가 표시된다', async () => {
+  render(<RegisterAddress />);
+  await fillInvalidValuesAndSubmit();
+  expect(
+    screen.getByText('올바르지 않은 값이 포함되어 있습니다')
+  ).toBeInTheDocument();
+});
+
+// 테스트 통과 ✅
+test('원인이 명확하지 않은 에러가 발생하면 메시지가 표시된다', async () => {
+  render(<RegisterAddress />);
+  await fillValuesAndSubmit();
+  expect(
+    screen.getByText('알 수 없는 에러가 발생했습니다')
+  ).toBeInTheDocument();
 });
 ```
