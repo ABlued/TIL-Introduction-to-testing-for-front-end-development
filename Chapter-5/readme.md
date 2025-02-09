@@ -758,3 +758,79 @@ test('원인이 명확하지 않은 에러가 발생하면 메시지가 표시�
   ).toBeInTheDocument();
 });
 ```
+
+<br/>
+
+## 7. UI 컴포넌트 스냅숏 테스트
+
+### 스냅숏 기록하기
+
+```typescript
+// 테스트 통과 ✅
+test("Snapshot: 계정명인 'taro'가 표시된다", () => {
+  const { container } = render(<Form name='taro' />);
+  expect(container).toMatchSnapshot(); // 같은 경로에 __snapshots__ 디렉토리에 스냅숏 파일이 저장된다.
+});
+
+// 스냅숏 테스트가 실패되도록 의도적으로 UI를 바꾸면 실패한다
+// 테스트 실패 ⛔️
+test("Snapshot: 계정명인 'taro'가 표시된다", () => {
+  const { container } = render(<Form name='jijo' />); // 의도적으로 바꿈
+  expect(container).toMatchSnapshot();
+});
+```
+
+### 스냅숏 갱신하기
+
+`npx jest --updateSnapshot` 또는 `npx jest -u` 명령어를 사용하여 갱신시킨다
+
+## 8. 암묵적 역할과 접근 가능한 이름
+
+테스트 라이브러리가 제공하는 `누구나 접근 가능한 쿼리`의 대표적인 getByRole은 요소의 역할을 참조한다.
+역할은 웹 기술 표준을 정하는 W3C의 WAI-ARIA라는 사양에 포함도니 내용 중 하나다.
+WAI-ARIA에 기반한 테스트 코드를 작성하면 스크린 리더 등의 보조 기기를 활용하는 사용자에게도 의도한 대로 콘텐츠가 도달하는지 검증할 수 있다.
+
+### 8 - 1 암묵적 역할
+
+몇몇 HTML 요소는 처음부터 역할을 가진다. 초깃값으로 부여된 역할은 `암묵적 역할`이라고 한다.
+
+```html
+<!-- button이라는 암묵적 역할을 가진다. -->
+<button>전송</button>
+<!-- role 속성을 지정할 필요가 없다. -->
+<button role="button">전송</button>
+<!-- 임의의 role 속성을 부여할 수도 있다. -->
+<div role="button">전송</div>
+```
+
+역할과 요소는 일대일로 매칭되진 않는다. 암묵적 역할을 요소에 할당한 속성에 따라 변경된다.
+
+```html
+<!-- role-"textbox" -->
+<input type="text" />
+<!-- role-"checebox" -->
+<input type="checkbox" />
+<!-- role-"radio" -->
+<input type="radio" />
+<!-- role-"spinbutton" -->
+<input type="number" />
+```
+
+<br/>
+
+### 8 - 2 역할과 접근 가능한 이름 확인하기
+
+`logRoles`를 사용하여 역할과 접근 가능한 이름을 확인할 수 있다.
+
+```typescript
+test('logRoles: 렌더링 결과로부터 역할과 접근 가능한 이름을 확인한다', () => {
+  const { container } = render(<Form name='taro' />);
+  logRoles(container);
+});
+```
+
+아래의 사진처럼 ------ 로 각각 구분되어있고 `heading:` 으로 출력된 것이 역할이고 그 아래 `Name: "계정 정보":` 로 출력도니 것이 접근 가능한 이름이다.
+
+![alt text](image.png)
+
+암묵적 역할 목록은 [aria-query](https://www.npmjs.com/package/aria-query) 라이브러리 홈페이지에서 확인할 수 있다.
