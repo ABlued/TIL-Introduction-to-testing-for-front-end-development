@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1739687682697" clover="3.2.0">
+  <project timestamp="1739687682697" name="All files">
+    <metrics statements="194" coveredstatements="179" conditionals="46" coveredconditionals="40" methods="99" coveredmethods="89" elements="339" coveredelements="308" complexity="0" loc="194" ncloc="194" packages="18" files="35" classes="35"/>
+    <package name="03.02">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <file name="index.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/03/02/index.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="03.04">
+      <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+      <file name="index.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/03/04/index.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="03.05">
+      <metrics statements="15" coveredstatements="15" conditionals="5" coveredconditionals="5" methods="4" coveredmethods="4"/>
+      <file name="index.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/03/05/index.ts">
+        <metrics statements="15" coveredstatements="15" conditionals="5" coveredconditionals="5" methods="4" coveredmethods="4"/>
+        <line num="1" count="15" type="stmt"/>
+        <line num="43" count="16" type="cond" truecount="3" falsecount="0"/>
+        <line num="44" count="6" type="stmt"/>
+        <line num="49" count="5" type="stmt"/>
+        <line num="50" count="3" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
+        <line num="52" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="59" count="5" type="stmt"/>
+        <line num="60" count="3" type="stmt"/>
+        <line num="61" count="2" type="stmt"/>
+        <line num="62" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="03.07">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
+      <file name="index.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/03/07/index.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
+        <line num="1" count="12" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="04.02">
+      <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+      <file name="greet.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/04/02/greet.ts">
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+        <line num="1" count="14" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="04.03">
+      <metrics statements="5" coveredstatements="5" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <file name="index.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/04/03/index.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="49" count="4" type="stmt"/>
+        <line num="51" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="04.04">
+      <metrics statements="7" coveredstatements="7" conditionals="1" coveredconditionals="1" methods="4" coveredmethods="4"/>
+      <file name="index.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/04/04/index.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="1" coveredconditionals="1" methods="4" coveredmethods="4"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="10" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="04.05">
+      <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="4"/>
+      <file name="checkConfig.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/04/05/checkConfig.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="7" count="2" type="cond" truecount="1" falsecount="1"/>
+      </file>
+      <file name="greet.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/04/05/greet.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="1" type="cond" truecount="1" falsecount="1"/>
+      </file>
+    </package>
+    <package name="04.06">
+      <metrics statements="3" coveredstatements="3" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <file name="index.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/04/06/index.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="4" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="04.07">
+      <metrics statements="7" coveredstatements="7" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+      <file name="index.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/04/07/index.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="04.fetchers">
+      <metrics statements="13" coveredstatements="6" conditionals="1" coveredconditionals="0" methods="7" coveredmethods="2"/>
+      <file name="fixtures.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/04/fetchers/fixtures.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="18" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="33" count="3" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/04/fetchers/index.ts">
+        <metrics statements="9" coveredstatements="2" conditionals="1" coveredconditionals="0" methods="6" coveredmethods="1"/>
+        <line num="1" count="18" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="05.03">
+      <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+      <file name="Form.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/03/Form.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+        <line num="1" count="9" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="cond" truecount="1" falsecount="1"/>
+      </file>
+    </package>
+    <package name="05.04">
+      <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="6" coveredmethods="6"/>
+      <file name="ArticleList.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/04/ArticleList.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="1" count="8" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="14" count="12" type="stmt"/>
+      </file>
+      <file name="ArticleListItem.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/04/ArticleListItem.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="20" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="14" type="stmt"/>
+      </file>
+      <file name="fixture.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/04/fixture.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="05.05">
+      <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
+      <file name="Agreement.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/05/Agreement.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="16" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="10" type="stmt"/>
+      </file>
+      <file name="Form.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/05/Form.tsx">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="8" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+      </file>
+      <file name="InputAccount.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/05/InputAccount.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="17" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="05.06">
+      <metrics statements="22" coveredstatements="22" conditionals="9" coveredconditionals="9" methods="14" coveredmethods="14"/>
+      <file name="ContactNumber.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/06/ContactNumber.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="30" type="stmt"/>
+        <line num="2" count="21" type="stmt"/>
+      </file>
+      <file name="DeliveryAddress.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/06/DeliveryAddress.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="1" count="28" type="cond" truecount="1" falsecount="0"/>
+        <line num="2" count="19" type="stmt"/>
+      </file>
+      <file name="Form.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/06/Form.tsx">
+        <metrics statements="8" coveredstatements="8" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2"/>
+        <line num="1" count="22" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="18" type="stmt"/>
+        <line num="16" count="18" type="stmt"/>
+      </file>
+      <file name="PastDeliveryAddress.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/06/PastDeliveryAddress.tsx">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="1" count="15" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
+      </file>
+      <file name="RegisterDeliveryAddress.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/06/RegisterDeliveryAddress.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="1" count="16" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+      </file>
+      <file name="fixtures.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/06/fixtures.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="7" type="stmt"/>
+      </file>
+    </package>
+    <package name="05.07">
+      <metrics statements="40" coveredstatements="39" conditionals="6" coveredconditionals="6" methods="16" coveredmethods="15"/>
+      <file name="RegisterAddress.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/07/RegisterAddress.tsx">
+        <metrics statements="17" coveredstatements="17" conditionals="3" coveredconditionals="3" methods="5" coveredmethods="5"/>
+        <line num="1" count="8" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="9" type="stmt"/>
+        <line num="25" count="9" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
+        <line num="30" count="4" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="39" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+      </file>
+      <file name="handleSubmit.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/07/handleSubmit.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="1" count="12" type="stmt"/>
+        <line num="2" count="9" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="24" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+      </file>
+      <file name="testingUtils.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/07/testingUtils.ts">
+        <metrics statements="13" coveredstatements="12" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="4"/>
+        <line num="1" count="15" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+        <line num="39" count="4" type="stmt"/>
+        <line num="43" count="4" type="stmt"/>
+        <line num="47" count="4" type="stmt"/>
+        <line num="51" count="4" type="stmt"/>
+        <line num="55" count="4" type="stmt"/>
+      </file>
+      <file name="validations.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/07/validations.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="1" count="9" type="stmt"/>
+        <line num="4" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="05.07.fetchers">
+      <metrics statements="16" coveredstatements="11" conditionals="3" coveredconditionals="2" methods="7" coveredmethods="4"/>
+      <file name="fixtures.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/07/fetchers/fixtures.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/07/fetchers/index.ts">
+        <metrics statements="8" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="4" coveredmethods="1"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+      </file>
+      <file name="mock.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/05/07/fetchers/mock.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="5" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="06">
+      <metrics statements="13" coveredstatements="12" conditionals="6" coveredconditionals="5" methods="5" coveredmethods="5"/>
+      <file name="Articles.tsx" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/06/Articles.tsx">
+        <metrics statements="6" coveredstatements="6" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+      </file>
+      <file name="greetByTime.ts" path="/Users/newin/Desktop/homeCoding/test-code-TIL/practice/src/06/greetByTime.ts">
+        <metrics statements="7" coveredstatements="6" conditionals="3" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
