@@ -1,0 +1,41 @@
+{
+  "name": "storybook-install",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "storybook dev -p 6006",
+    "storycap": "storycap --serverCmd \"npx http-server storybook-static -a localhost -p 6006\" http://localhost:6006",
+    "storybook:build": "storybook build",
+    "storybook:serve": "npx http-server storybook-static -a localhost -p 6006 -s",
+    "vrt:snapshot": "storycap --serverCmd \"npx http-server storybook-static -a localhost -p 6006\" http://localhost:6006",
+    "vrt:expected": "rimraf .reg/expected && mv __screenshots__ .reg/expected",
+    "vrt:run": "reg-suit run",
+    "vrt:serve": "npx http-server .reg -o -p 8080"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.9",
+    "@babel/preset-react": "^7.22.5",
+    "@storybook/addon-essentials": "^7.1.0",
+    "@storybook/addon-interactions": "^7.1.0",
+    "@storybook/addon-links": "^7.1.0",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.1.0",
+    "@storybook/react": "^7.1.0",
+    "@storybook/react-webpack5": "^7.1.0",
+    "@storybook/testing-library": "^0.2.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "reg-keygen-git-hash-plugin": "^0.12.2",
+    "reg-notify-github-plugin": "^0.12.2",
+    "reg-publish-s3-plugin": "^0.12.2",
+    "reg-suit": "^0.12.2",
+    "storybook": "^7.1.0",
+    "storycap": "^4.2.0"
+  }
+}
